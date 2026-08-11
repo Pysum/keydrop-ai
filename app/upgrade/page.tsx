@@ -2,17 +2,47 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Zap, Bell, CheckCircle2, ArrowLeft, Star, Shield, MessageSquare } from "lucide-react";
+import { Zap, Bell, CheckCircle2, ArrowLeft, Star, Shield, MessageSquare, AlertTriangle, Loader2 } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
+import { createClient, isSupabaseConfigured } from "@/lib/supabase";
 
 export default function UpgradePage() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simple local confirmation — swap for a real waitlist (e.g. Mailchimp / Loops) later
-    setSubmitted(true);
+    setError(null);
+    setLoading(true);
+
+    try {
+      if (!isSupabaseConfigured) {
+        throw new Error("Service not configured. Please try again later.");
+      }
+
+      const supabase = createClient();
+      const { error: dbError } = await supabase
+        .from("waitlist")
+        .insert({ email: email.trim().toLowerCase() });
+
+      if (dbError) {
+        // Duplicate email — treat as success so we don't leak info
+        if (dbError.code === "23505") {
+          setSubmitted(true);
+          return;
+        }
+        throw new Error(dbError.message);
+      }
+
+      setSubmitted(true);
+    } catch (err: unknown) {
+      console.error("Waitlist error:", err);
+      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -63,8 +93,9 @@ export default function UpgradePage() {
                 <CheckCircle2 className="h-12 w-12 text-emerald-400" />
                 <h2 className="text-lg font-semibold">You&apos;re on the list!</h2>
                 <p className="text-sm text-zinc-400">
-                  We&apos;ll email you at <strong className="text-white">{email}</strong> the
-                  moment lifetime access goes live — with a special early-bird discount.
+                  We&apos;ll email{" "}
+                  <strong className="text-white">{email}</strong>{" "}
+                  the moment lifetime access goes live — with a special early-bird discount.
                 </p>
                 <Link href="/dashboard" className="btn-primary mt-2">
                   Back to Dashboard
@@ -76,6 +107,14 @@ export default function UpgradePage() {
                   <Bell className="h-4 w-4 text-violet-400" />
                   <span>Get notified when it launches</span>
                 </div>
+
+                {error && (
+                  <div className="mb-3 flex items-start gap-2 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400">
+                    <AlertTriangle className="h-4 w-4 shrink-0 mt-0.5" />
+                    <span>{error}</span>
+                  </div>
+                )}
+
                 <form onSubmit={handleSubmit} className="flex flex-col gap-3 sm:flex-row">
                   <input
                     type="email"
@@ -83,10 +122,15 @@ export default function UpgradePage() {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="you@example.com"
                     required
+                    disabled={loading}
                     className="input flex-1"
                   />
-                  <button type="submit" className="btn-primary shrink-0">
-                    Notify me
+                  <button type="submit" disabled={loading} className="btn-primary shrink-0 gap-2">
+                    {loading ? (
+                      <><Loader2 className="h-4 w-4 animate-spin" /> Saving…</>
+                    ) : (
+                      "Notify me"
+                    )}
                   </button>
                 </form>
                 <p className="mt-3 text-xs text-zinc-600">
