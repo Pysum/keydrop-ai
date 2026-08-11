@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# KeyDrop AI
 
-## Getting Started
+> **Stop paying $15/month to chat with your PDFs.**
 
-First, run the development server:
+KeyDrop AI lets users upload PDF, TXT, or DOCX files and have intelligent AI conversations about them — using **their own OpenAI or Gemini API key**. One-time $7 lifetime unlock, no subscriptions.
+
+---
+
+## Tech Stack
+
+| Layer | Choice |
+|---|---|
+| Frontend | Next.js 14 (App Router) + Tailwind CSS |
+| Auth | Supabase (free tier) |
+| Payments | Stripe (one-time checkout) |
+| AI | OpenAI API + Google Gemini API |
+| PDF Parsing | pdfjs-dist (client-side) |
+| DOCX Parsing | mammoth (client-side) |
+| Hosting | Vercel (free tier) |
+
+## Quick Start
 
 ```bash
+# 1. Clone & install
+npm install
+
+# 2. Set up environment variables
+cp .env.local.example .env.local
+# Edit .env.local with your Supabase + Stripe credentials
+
+# 3. Run dev server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+| Variable | Description |
+|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon/public key |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Stripe publishable key |
+| `STRIPE_SECRET_KEY` | Stripe secret key |
+| `STRIPE_WEBHOOK_SECRET` | Stripe webhook signing secret |
+| `STRIPE_PRICE_ID` | Stripe one-time price ID ($7) |
+| `NEXT_PUBLIC_APP_URL` | App URL (e.g. `https://your-app.vercel.app`) |
 
-## Learn More
+## Privacy Model
 
-To learn more about Next.js, take a look at the following resources:
+- User API keys → stored **only** in `localStorage`, never sent to our backend
+- Documents → parsed **client-side**, never uploaded to our servers
+- AI calls → go **browser → OpenAI/Gemini** directly
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deploy to Vercel
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
 
-## Deploy on Vercel
+1. Push to GitHub
+2. Import in Vercel
+3. Add all environment variables
+4. Deploy
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Pages
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+| Route | Description |
+|---|---|
+| `/` | Landing page |
+| `/register` | Sign up |
+| `/login` | Sign in |
+| `/dashboard` | Upload documents, pick AI model |
+| `/chat/[id]` | Chat with a document |
+| `/settings` | Manage API keys (localStorage) |
+| `/upgrade` | Stripe payment page |
+| `/api/stripe/checkout` | Creates Stripe checkout session |
+| `/api/stripe/webhook` | Handles Stripe events |
+| `/api/auth/callback` | Supabase OAuth callback |
+
+---
+
+Built with [Next.js](https://nextjs.org) · [Supabase](https://supabase.com) · [Stripe](https://stripe.com)
