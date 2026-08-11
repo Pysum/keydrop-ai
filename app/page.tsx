@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Zap, Shield, MessageSquare, Upload, CheckCircle2, Star } from "lucide-react";
+import { ArrowRight, Zap, Shield, MessageSquare, Upload, CheckCircle2, Star, Bell } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 
 export default function LandingPage() {
@@ -9,7 +9,6 @@ export default function LandingPage() {
 
       {/* Hero */}
       <section className="relative isolate overflow-hidden pt-24 pb-20 sm:pt-36 sm:pb-28">
-        {/* Background glow */}
         <div className="absolute inset-0 -z-10 bg-hero-glow" />
         <div className="absolute -top-40 left-1/2 -z-10 -translate-x-1/2 h-[600px] w-[600px] rounded-full bg-violet-600/10 blur-[120px]" />
 
@@ -31,7 +30,9 @@ export default function LandingPage() {
           </h1>
 
           <p className="mt-6 text-lg leading-8 text-zinc-400 sm:text-xl">
-            KeyDrop AI lets you upload any PDF, TXT, or DOCX and have an intelligent conversation with it — using <strong className="text-white">your own OpenAI or Gemini API key</strong>. Pay once, own it forever.
+            KeyDrop AI lets you upload any PDF, TXT, or DOCX and have an intelligent conversation
+            with it — using <strong className="text-white">your own OpenAI or Gemini API key</strong>.
+            Start free. Own it forever.
           </p>
 
           {/* CTA buttons */}
@@ -64,7 +65,7 @@ export default function LandingPage() {
             </span>
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
-              One-time $7 unlock
+              Free to start
             </span>
           </div>
         </div>
@@ -72,14 +73,12 @@ export default function LandingPage() {
         {/* Hero UI Preview */}
         <div className="mx-auto mt-16 max-w-3xl px-6">
           <div className="rounded-2xl border border-surface-700 bg-surface-900 shadow-[0_0_60px_rgba(124,58,237,0.15)] overflow-hidden">
-            {/* Window bar */}
             <div className="flex items-center gap-2 border-b border-surface-700 bg-surface-900 px-4 py-3">
               <div className="h-3 w-3 rounded-full bg-red-500/60" />
               <div className="h-3 w-3 rounded-full bg-amber-500/60" />
               <div className="h-3 w-3 rounded-full bg-emerald-500/60" />
               <span className="ml-3 text-xs text-zinc-500">research_paper.pdf — KeyDrop AI</span>
             </div>
-            {/* Chat preview */}
             <div className="p-6 space-y-4">
               <div className="chat-bubble-user">What are the key findings of this paper?</div>
               <div className="chat-bubble-ai">
@@ -122,7 +121,7 @@ export default function LandingPage() {
         <div className="mx-auto max-w-4xl px-6">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold sm:text-4xl">Simple, honest pricing</h2>
-            <p className="mt-4 text-zinc-400">One price. Lifetime access. No tricks.</p>
+            <p className="mt-4 text-zinc-400">Start free. Upgrade once when you&apos;re ready.</p>
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2">
@@ -131,9 +130,15 @@ export default function LandingPage() {
               <div>
                 <p className="text-sm font-medium text-zinc-400">Free</p>
                 <p className="mt-1 text-4xl font-extrabold">$0</p>
+                <p className="text-xs text-zinc-500 mt-1">No credit card required</p>
               </div>
               <ul className="space-y-2 flex-1">
-                {["Create an account", "Manage your API keys (stored locally)", "Upload & parse documents", "5 chat messages per session"].map((item) => (
+                {[
+                  "Create an account",
+                  "Manage your API keys (stored locally)",
+                  "Upload & parse documents",
+                  "5 chat messages per session",
+                ].map((item) => (
                   <li key={item} className="flex items-center gap-2 text-sm text-zinc-400">
                     <CheckCircle2 className="h-4 w-4 text-zinc-600 shrink-0" />
                     {item}
@@ -141,22 +146,21 @@ export default function LandingPage() {
                 ))}
               </ul>
               <Link href="/register" className="btn-secondary w-full justify-center">
-                Get started
+                Get started free
               </Link>
             </div>
 
-            {/* Lifetime plan */}
+            {/* Coming Soon — Lifetime plan */}
             <div className="relative card glow-border flex flex-col gap-4 bg-surface-800">
               <div className="absolute -top-3 right-6">
                 <span className="rounded-full bg-violet-600 px-3 py-1 text-xs font-semibold text-white shadow-[0_0_15px_rgba(124,58,237,0.5)]">
-                  Most Popular
+                  Coming Soon
                 </span>
               </div>
               <div>
                 <p className="text-sm font-medium text-violet-400">Lifetime Access</p>
                 <div className="mt-1 flex items-baseline gap-2">
-                  <p className="text-4xl font-extrabold">$7</p>
-                  <p className="text-sm text-zinc-500 line-through">$15/mo</p>
+                  <p className="text-4xl font-extrabold">$?</p>
                 </div>
                 <p className="text-xs text-zinc-500 mt-1">One-time payment · Pay once, use forever</p>
               </div>
@@ -175,10 +179,16 @@ export default function LandingPage() {
                   </li>
                 ))}
               </ul>
-              <Link href="/register" className="btn-primary w-full justify-center shadow-[0_0_20px_rgba(124,58,237,0.4)]">
-                Unlock Lifetime Access
-                <ArrowRight className="h-4 w-4" />
+              <Link
+                href="/upgrade"
+                className="btn-primary w-full justify-center shadow-[0_0_20px_rgba(124,58,237,0.4)]"
+              >
+                <Bell className="h-4 w-4" />
+                Join the Waitlist
               </Link>
+              <p className="text-center text-[10px] text-zinc-600">
+                Be first to know when it launches — and get the best price.
+              </p>
             </div>
           </div>
         </div>
@@ -218,7 +228,7 @@ export default function LandingPage() {
           <h2 className="text-3xl font-extrabold sm:text-4xl">
             Ready to stop overpaying?
           </h2>
-          <p className="mt-4 text-zinc-400">Join thousands who ditched the subscriptions.</p>
+          <p className="mt-4 text-zinc-400">Start free today. No credit card. No commitment.</p>
           <Link
             href="/register"
             className="btn-primary mt-8 inline-flex text-base px-10 py-4 shadow-[0_0_40px_rgba(124,58,237,0.5)]"
@@ -287,8 +297,8 @@ const features = [
   },
   {
     icon: Star,
-    title: "Lifetime Access for $7",
-    description: "One small payment unlocks unlimited messages, all AI models, and every future feature we ship.",
+    title: "Lifetime Access Coming Soon",
+    description: "One small payment will unlock unlimited messages, all AI models, and every future feature we ship.",
   },
 ];
 
@@ -296,7 +306,7 @@ const testimonials = [
   {
     name: "Alex R.",
     role: "PhD Researcher",
-    quote: "I was paying $20/month for ChatPDF. KeyDrop gave me the same thing for a one-time $7. It's a no-brainer.",
+    quote: "I was paying $20/month for ChatPDF. KeyDrop gives me the same thing with my own API key. The privacy angle is a huge win.",
   },
   {
     name: "Sarah K.",
