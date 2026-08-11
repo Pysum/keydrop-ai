@@ -69,7 +69,7 @@ export default function ChatPage() {
     <div className="flex h-screen flex-col bg-surface-950">
       {/* Top bar */}
       <header className="flex shrink-0 items-center gap-3 border-b border-surface-800 bg-surface-900/90 px-4 py-3 backdrop-blur-md">
-        <Link href="/dashboard" className="btn-ghost p-2 rounded-lg">
+        <Link href="/dashboard" className="btn-ghost p-0 h-10 w-10 rounded-lg shrink-0">
           <ArrowLeft className="h-4 w-4" />
         </Link>
 
@@ -80,8 +80,8 @@ export default function ChatPage() {
           </div>
           <div className="min-w-0">
             <p className="truncate text-sm font-medium leading-tight">{document.name}</p>
-            <p className="text-[10px] text-zinc-500">
-              {document.content.length.toLocaleString()} characters
+            <p className="text-xs text-zinc-500">
+              {document.content.length.toLocaleString()} chars
             </p>
           </div>
         </div>
@@ -91,7 +91,7 @@ export default function ChatPage() {
           <div className="relative">
             <button
               onClick={() => setShowModelPicker(!showModelPicker)}
-              className="btn-ghost gap-1 text-xs"
+              className="btn-ghost gap-1 text-xs px-3 min-h-[44px]"
             >
               <span className="hidden sm:inline">{provider === "openai" ? "🤖" : "✨"}</span>
               {modelLabel}
@@ -101,7 +101,7 @@ export default function ChatPage() {
             {showModelPicker && (
               <>
                 <div className="fixed inset-0 z-10" onClick={() => setShowModelPicker(false)} />
-                <div className="absolute right-0 top-full z-20 mt-2 w-64 rounded-xl border border-surface-600 bg-surface-800 p-2 shadow-2xl">
+                <div className="absolute right-0 top-full z-20 mt-2 w-56 max-w-[90vw] rounded-xl border border-surface-600 bg-surface-800 p-2 shadow-2xl">
                   <p className="px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-zinc-500">OpenAI</p>
                   {OPENAI_MODELS.map((m) => (
                     <button
@@ -138,7 +138,7 @@ export default function ChatPage() {
           </div>
 
           {!apiKey && (
-            <Link href="/settings" className="btn-secondary text-xs gap-1 px-3 py-1.5">
+            <Link href="/settings" className="btn-secondary text-xs gap-1 px-3">
               <Settings className="h-3 w-3" />
               Add Key
             </Link>

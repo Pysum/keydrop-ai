@@ -73,7 +73,7 @@ export default function DashboardPage() {
             <p className="flex-1 text-sm font-medium text-emerald-300">
               Payment successful! Lifetime access is now active. 🎉
             </p>
-            <button onClick={() => setShowSuccessBanner(false)} className="text-zinc-500 hover:text-zinc-300">
+            <button onClick={() => setShowSuccessBanner(false)} className="flex h-10 w-10 items-center justify-center rounded-lg text-zinc-500 hover:text-zinc-300 touch-manipulation">
               <X className="h-4 w-4" />
             </button>
           </div>
@@ -84,7 +84,7 @@ export default function DashboardPage() {
           <div className="mb-4 flex items-center gap-3 rounded-xl border border-zinc-700 bg-surface-800 p-4">
             <AlertCircle className="h-5 w-5 text-zinc-400 shrink-0" />
             <p className="flex-1 text-sm text-zinc-400">Payment cancelled. No charge was made.</p>
-            <button onClick={() => setShowCancelBanner(false)} className="text-zinc-500 hover:text-zinc-300">
+            <button onClick={() => setShowCancelBanner(false)} className="flex h-10 w-10 items-center justify-center rounded-lg text-zinc-500 hover:text-zinc-300 touch-manipulation">
               <X className="h-4 w-4" />
             </button>
           </div>
@@ -100,7 +100,7 @@ export default function DashboardPage() {
                 Add your OpenAI or Gemini API key in settings to start chatting.
               </p>
             </div>
-            <Link href="/settings" className="btn-secondary text-xs px-3 py-1.5 shrink-0">
+            <Link href="/settings" className="btn-secondary text-xs px-3 shrink-0">
               <Settings className="h-3.5 w-3.5" />
               Settings
             </Link>
@@ -139,7 +139,7 @@ export default function DashboardPage() {
                   <button
                     key={p}
                     onClick={() => handleProviderChange(p)}
-                    className={`flex items-center gap-2 rounded-lg border px-4 py-2.5 text-sm font-medium transition-all ${
+                    className={`flex items-center gap-2 rounded-lg border px-4 py-3 text-sm font-medium transition-all touch-manipulation ${
                       provider === p
                         ? "border-violet-500 bg-violet-500/20 text-violet-300"
                         : "border-surface-600 bg-surface-800 text-zinc-400 hover:border-violet-500/40 hover:text-zinc-200"
@@ -225,7 +225,7 @@ export default function DashboardPage() {
               <div className="flex items-center gap-2">
                 <Zap className="h-4 w-4 text-violet-400" />
                 <span className="text-sm font-semibold">Upgrade</span>
-                <span className="ml-auto text-xs font-bold text-violet-300">$7</span>
+                <span className="ml-auto text-xs font-bold text-violet-300">Soon</span>
               </div>
               <p className="text-xs text-zinc-400">Unlock unlimited messages & all AI models forever.</p>
               <Link href="/upgrade" className="btn-primary w-full justify-center text-xs py-2">

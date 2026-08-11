@@ -105,7 +105,7 @@ export function ChatWindow({ document, provider, model, apiKey }: ChatWindowProp
                 <button
                   key={q}
                   onClick={() => setInput(q)}
-                  className="rounded-full border border-surface-600 bg-surface-800 px-3 py-1.5 text-xs text-zinc-400 transition-all hover:border-violet-500/50 hover:text-violet-300"
+                  className="rounded-full border border-surface-600 bg-surface-800 px-4 py-2.5 text-xs text-zinc-400 transition-all hover:border-violet-500/50 hover:text-violet-300 touch-manipulation min-h-[44px]"
                 >
                   {q}
                 </button>

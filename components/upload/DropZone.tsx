@@ -47,7 +47,7 @@ export function DropZone({ onFileAccepted, isParsing, document, error, onClear }
         </div>
         <button
           onClick={onClear}
-          className="text-xs text-zinc-500 transition-colors hover:text-red-400"
+          className="min-h-[44px] px-3 text-xs text-zinc-500 transition-colors hover:text-red-400 touch-manipulation"
         >
           Remove
         </button>
@@ -60,7 +60,7 @@ export function DropZone({ onFileAccepted, isParsing, document, error, onClear }
       <div
         {...getRootProps()}
         className={cn(
-          "group cursor-pointer rounded-xl border-2 border-dashed p-8 text-center transition-all duration-200",
+          "group cursor-pointer rounded-xl border-2 border-dashed p-5 sm:p-8 text-center transition-all duration-200",
           isDragActive
             ? "border-violet-500 bg-violet-500/10"
             : "border-surface-600 hover:border-violet-500/50 hover:bg-surface-800/50",
