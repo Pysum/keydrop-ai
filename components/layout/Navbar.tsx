@@ -148,7 +148,7 @@ export function Navbar({ variant = "app" }: NavbarProps) {
                     <Link href="/upgrade" onClick={() => setMenuOpen(false)}
                       className="flex items-center gap-2 w-full rounded-lg px-3 py-2 text-xs text-violet-300 hover:bg-surface-700 transition-colors">
                       <Zap className="h-3.5 w-3.5 text-violet-400" />
-                      Upgrade — $7
+                      Upgrade (Coming Soon)
                     </Link>
 
                     <div className="my-1 border-t border-surface-700" />
