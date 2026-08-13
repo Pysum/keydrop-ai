@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Eye, EyeOff, Save, Trash2, Key, Shield, CheckCircle2, ExternalLink, Zap } from "lucide-react";
+import { Eye, EyeOff, Save, Trash2, Key, Shield, CheckCircle2, ExternalLink, Zap, Lock } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { useApiKeys } from "@/hooks/useApiKeys";
 import { Badge } from "@/components/ui/Badge";
@@ -64,14 +64,34 @@ export default function SettingsPage() {
         </div>
 
         {/* Privacy notice */}
-        <div className="mb-6 flex items-start gap-3 rounded-xl border border-violet-500/20 bg-violet-500/10 p-4">
-          <Shield className="h-5 w-5 text-violet-400 shrink-0 mt-0.5" />
-          <div>
-            <p className="text-sm font-medium text-violet-300">End-to-end privacy guarantee</p>
-            <p className="text-xs text-violet-400/70 mt-1">
-              API keys are saved to <code className="rounded bg-surface-800 px-1 text-violet-300">localStorage</code> exclusively. 
-              They are used only to make direct API calls from your browser to OpenAI or Google — we never intercept or log them.
-            </p>
+        <div className="mb-6 rounded-xl border border-violet-500/20 bg-violet-500/10 overflow-hidden">
+          <div className="flex items-start gap-3 p-4">
+            <Shield className="h-5 w-5 text-violet-400 shrink-0 mt-0.5" />
+            <div>
+              <p className="text-sm font-medium text-violet-300">End-to-end privacy guarantee</p>
+              <p className="text-xs text-violet-400/70 mt-1">
+                API keys are saved to <code className="rounded bg-surface-800 px-1 text-violet-300">localStorage</code> exclusively.
+                They are used only to make direct API calls from your browser to OpenAI or Google — we never intercept or log them.
+              </p>
+            </div>
+          </div>
+          {/* Privacy Proof code block */}
+          <div className="mx-4 mb-4 rounded-lg border border-zinc-700/50 bg-zinc-950 overflow-hidden">
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-zinc-900 border-b border-zinc-700/50">
+              <Lock className="h-3 w-3 text-emerald-400 shrink-0" />
+              <span className="text-[10px] font-semibold text-zinc-400 tracking-wide uppercase">Privacy Proof</span>
+              <div className="ml-auto flex gap-1">
+                <span className="h-2 w-2 rounded-full bg-zinc-700" />
+                <span className="h-2 w-2 rounded-full bg-zinc-700" />
+                <span className="h-2 w-2 rounded-full bg-zinc-700" />
+              </div>
+            </div>
+            <pre className="px-3 py-2.5 text-[11px] leading-5 font-mono overflow-x-auto">
+              <div className="text-emerald-300">{"localStorage.setItem('kd_openai_key', userKey);"}</div>
+              <div className="text-zinc-500 italic">{"// Handled 100% in your browser."}</div>
+              <div className="text-zinc-500 italic">{"// Zero backend server storage. Zero interception."}</div>
+              <div className="text-emerald-300">{"// Your browser → OpenAI/Gemini directly. ✓"}</div>
+            </pre>
           </div>
         </div>
 

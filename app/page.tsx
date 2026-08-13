@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Zap, Shield, MessageSquare, Upload, CheckCircle2, Star, Bell } from "lucide-react";
+import { ArrowRight, Zap, Shield, MessageSquare, Upload, CheckCircle2, Star, Bell, Lock } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 
 export default function LandingPage() {
@@ -314,7 +314,12 @@ export default function LandingPage() {
   );
 }
 
-function FeatureCard({ icon: Icon, title, description }: { icon: React.ElementType; title: string; description: string }) {
+function FeatureCard({ icon: Icon, title, description, snippet }: {
+  icon: React.ElementType;
+  title: string;
+  description: string;
+  snippet?: string[];
+}) {
   return (
     <div className="card flex flex-col gap-4 transition-all duration-200 hover:border-violet-500/30 hover:bg-surface-800">
       <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-600/20">
@@ -324,6 +329,26 @@ function FeatureCard({ icon: Icon, title, description }: { icon: React.ElementTy
         <h3 className="font-semibold">{title}</h3>
         <p className="mt-1 text-sm text-zinc-400">{description}</p>
       </div>
+      {snippet && (
+        <div className="rounded-lg border border-zinc-700/50 bg-zinc-950 overflow-hidden">
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-zinc-900 border-b border-zinc-700/50">
+            <Lock className="h-3 w-3 text-emerald-400 shrink-0" />
+            <span className="text-[10px] font-semibold text-zinc-400 tracking-wide uppercase">Privacy Proof</span>
+            <div className="ml-auto flex gap-1">
+              <span className="h-2 w-2 rounded-full bg-zinc-700" />
+              <span className="h-2 w-2 rounded-full bg-zinc-700" />
+              <span className="h-2 w-2 rounded-full bg-zinc-700" />
+            </div>
+          </div>
+          <pre className="px-3 py-2.5 text-[11px] leading-5 font-mono overflow-x-auto">
+            {snippet.map((line, i) => (
+              <div key={i} className={line.startsWith("//") ? "text-zinc-500 italic" : "text-emerald-300"}>
+                {line}
+              </div>
+            ))}
+          </pre>
+        </div>
+      )}
     </div>
   );
 }
@@ -338,6 +363,11 @@ const features = [
     icon: Shield,
     title: "Your Keys, Your Privacy",
     description: "API keys are stored only in your browser's localStorage. We never see them, never store them.",
+    snippet: [
+      "localStorage.setItem('kd_openai_key', key);",
+      "// Zero server storage. Zero backend calls.",
+      "// Your browser → OpenAI/Gemini directly.",
+    ],
   },
   {
     icon: MessageSquare,
