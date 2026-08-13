@@ -191,6 +191,65 @@ export default function LandingPage() {
               </p>
             </div>
           </div>
+
+          {/* Cost Comparison */}
+          <div className="mt-12 rounded-2xl border border-surface-700 bg-surface-900 overflow-hidden">
+            <div className="px-5 py-4 border-b border-surface-700">
+              <p className="text-sm font-semibold text-white">Why bring your own key?</p>
+              <p className="text-xs text-zinc-500 mt-0.5">Real numbers. No marketing math.</p>
+            </div>
+
+            {/* Table header */}
+            <div className="grid grid-cols-3 px-5 py-3 bg-surface-800/60 border-b border-surface-700">
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-zinc-500"></p>
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-zinc-500 text-center">Monthly cost</p>
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-zinc-500 text-center">Limits</p>
+            </div>
+
+            {/* Row 1 — Traditional apps */}
+            <div className="grid grid-cols-3 items-center px-5 py-4 border-b border-surface-800 gap-3">
+              <div>
+                <p className="text-sm font-medium text-zinc-200">Traditional apps</p>
+                <p className="text-[11px] text-zinc-500 mt-0.5">ChatPDF, Notion AI, etc.</p>
+              </div>
+              <div className="text-center">
+                <p className="text-sm font-bold text-red-400">$15–$20</p>
+                <p className="text-[11px] text-zinc-500">fixed every month</p>
+              </div>
+              <div className="text-center">
+                <p className="text-sm font-semibold text-red-400">Strict caps</p>
+                <p className="text-[11px] text-zinc-500">pages, messages, files</p>
+              </div>
+            </div>
+
+            {/* Row 2 — KeyDrop */}
+            <div className="grid grid-cols-3 items-center px-5 py-4 gap-3 bg-violet-500/5">
+              <div>
+                <p className="text-sm font-medium text-white flex items-center gap-1.5">
+                  <Zap className="h-3.5 w-3.5 text-violet-400 shrink-0" />
+                  KeyDrop AI
+                </p>
+                <p className="text-[11px] text-zinc-500 mt-0.5">Your key, your cost</p>
+              </div>
+              <div className="text-center">
+                <p className="text-sm font-bold text-emerald-400">~$0.05–$0.20</p>
+                <p className="text-[11px] text-zinc-500">pay only what you use</p>
+              </div>
+              <div className="text-center">
+                <p className="text-sm font-semibold text-emerald-400">No caps</p>
+                <p className="text-[11px] text-zinc-500">unlimited pages & files</p>
+              </div>
+            </div>
+
+            {/* Bottom callout */}
+            <div className="px-5 py-3.5 bg-surface-800/40 flex flex-col sm:flex-row sm:items-center gap-1">
+              <span className="text-lg">💡</span>
+              <p className="text-xs text-zinc-400">
+                <strong className="text-white">$1.00 of API credits</strong> can process hundreds of research papers.
+                Most users spend less than a coffee per month.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
