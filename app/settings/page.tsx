@@ -165,12 +165,30 @@ interface ApiKeyCardProps {
   onRemove: () => void;
 }
 
+const apiKeyGuide: Record<string, { accountUrl: string; dashUrl: string; dashLabel: string; keyPrefix: string }> = {
+  openai: {
+    accountUrl: "https://platform.openai.com/signup",
+    dashUrl: "https://platform.openai.com/api-keys",
+    dashLabel: "platform.openai.com/api-keys",
+    keyPrefix: "sk-proj-...",
+  },
+  gemini: {
+    accountUrl: "https://accounts.google.com/signup",
+    dashUrl: "https://aistudio.google.com/app/apikey",
+    dashLabel: "aistudio.google.com/app/apikey",
+    keyPrefix: "AIza...",
+  },
+};
+
 function ApiKeyCard({
-  title, description, placeholder, docsUrl,
+  provider, title, description, placeholder, docsUrl,
   draft, setDraft, showKey, setShowKey,
   currentKey, hasKey, saving, saved,
   maskKey, onSave, onRemove,
 }: ApiKeyCardProps) {
+  const [guideOpen, setGuideOpen] = useState(false);
+  const guide = apiKeyGuide[provider];
+
   return (
     <div className="card space-y-4">
       <div className="flex items-start justify-between gap-3">
@@ -241,6 +259,85 @@ function ApiKeyCard({
           )}
           {saved ? "Saved!" : "Save"}
         </button>
+      </div>
+
+      {/* Beginner accordion */}
+      <div className="rounded-xl border border-surface-600 overflow-hidden">
+        <button
+          onClick={() => setGuideOpen((o) => !o)}
+          className="w-full flex items-center justify-between gap-2 px-4 py-3 text-left text-sm font-medium text-zinc-300 hover:text-white hover:bg-surface-800/60 transition-colors"
+        >
+          <span>🔑 New to API keys? Get yours in 60 seconds</span>
+          <span
+            className="text-zinc-500 transition-transform duration-300 shrink-0"
+            style={{ transform: guideOpen ? "rotate(180deg)" : "rotate(0deg)" }}
+          >
+            ▾
+          </span>
+        </button>
+
+        <div
+          className="transition-all duration-300 ease-in-out overflow-hidden"
+          style={{ maxHeight: guideOpen ? "420px" : "0px" }}
+        >
+          <div className="px-4 pb-4 pt-1 space-y-4 border-t border-surface-700">
+            {/* Step 1 */}
+            <div className="flex gap-3">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-violet-600 text-xs font-bold text-white">1</span>
+              <div>
+                <p className="text-sm font-medium text-zinc-200">Create a free account</p>
+                <p className="text-xs text-zinc-500 mt-0.5">
+                  Sign up at{" "}
+                  <a
+                    href={guide.accountUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-violet-400 hover:text-violet-300 underline underline-offset-2 transition-colors"
+                  >
+                    {provider === "openai" ? "platform.openai.com" : "accounts.google.com"}
+                  </a>
+                  {" "}— it&apos;s free and takes under a minute.
+                </p>
+              </div>
+            </div>
+
+            {/* Step 2 */}
+            <div className="flex gap-3">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-violet-600 text-xs font-bold text-white">2</span>
+              <div>
+                <p className="text-sm font-medium text-zinc-200">
+                  Generate a key{provider === "openai" ? " & add $2–$5 balance" : ""}
+                </p>
+                <p className="text-xs text-zinc-500 mt-0.5">
+                  Go to your{" "}
+                  <a
+                    href={guide.dashUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-violet-400 hover:text-violet-300 underline underline-offset-2 transition-colors"
+                  >
+                    API dashboard →
+                  </a>
+                  {provider === "openai"
+                    ? ' click "Create new secret key", then add $2–$5 of credit. That lasts most people months.'
+                    : ' and click "Create API key". Gemini has a free tier — no billing needed to start.'}
+                </p>
+              </div>
+            </div>
+
+            {/* Step 3 */}
+            <div className="flex gap-3">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-violet-600 text-xs font-bold text-white">3</span>
+              <div>
+                <p className="text-sm font-medium text-zinc-200">Paste it above — you&apos;re done</p>
+                <p className="text-xs text-zinc-500 mt-0.5">
+                  Copy your key (starts with <code className="rounded bg-surface-800 px-1 text-violet-300">{guide.keyPrefix}</code>), paste it in the box above, and hit Save.
+                  Your key never leaves your browser.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
